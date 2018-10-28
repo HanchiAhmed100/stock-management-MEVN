@@ -1,28 +1,65 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <nav class="uk-navbar-container uk-light" style="background:#222;color :#fff" uk-navbar>
+      <div class="uk-navbar-left">
+        <ul class="uk-navbar-nav">
+            <li class="uk-active">
+              <router-link to="/" class="uk-margin-right"><i class="fa fa-home fa-2x uk-padding-small"></i> Accueil</router-link>
+            </li>
+            <li class="uk-active">
+              <router-link to="/article" class="uk-margin-right"><i class="fa fa-newspaper-o fa-2x uk-padding-small"></i>
+              Liste des article Articles</router-link>
+            </li>
+            <li class="uk-active">
+              <router-link to="/create" class="uk-margin-right"><i class="fa fa-pencil fa-2x uk-padding-small"></i>Creation d'un article </router-link>
+            </li>
+            <li class="uk-active">
+              <router-link to="/filtre" class="uk-margin-right"><i class="fa fa-pie-chart fa-2x uk-padding-small"></i>Trie des article </router-link>
+            </li>
+        </ul>
+      </div>
+    </nav>
+    <router-view/>
   </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
-</script>
-
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.page{
+  position: fixed;
+  width: inherit;
+}
+.uk-link, a {
+color: white
+}
+
+
+.loader{
+  border : 15px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 15px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+@keyframes spin {
+  0%{ transform: rotate(0deg)}
+  50%{ transform: rotate(140deg)}
+  100%{ transform: rotate(360deg)}
+}
+::-webkit-scrollbar {
+    width: 10px;
+}
+/* Track */
+ ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+/* Handle */
+ ::-webkit-scrollbar-thumb {
+    background: #31b0d5;
+}
+/* Handle on hover */
+ ::-webkit-scrollbar-thumb:hover {
+    background: #ccc;
 }
 </style>
