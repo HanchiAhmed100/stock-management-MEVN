@@ -8,15 +8,25 @@
             </li>
             <li class="uk-active">
               <router-link to="/article" class="uk-margin-right"><i class="fa fa-newspaper-o fa-2x uk-padding-small"></i>
-              Liste des article Articles</router-link>
+              Liste des Articles</router-link>
             </li>
             <li class="uk-active">
               <router-link to="/create" class="uk-margin-right"><i class="fa fa-pencil fa-2x uk-padding-small"></i>Creation d'un article </router-link>
             </li>
             <li class="uk-active">
-              <router-link to="/filtre" class="uk-margin-right"><i class="fa fa-pie-chart fa-2x uk-padding-small"></i>Trie des article </router-link>
+              <router-link to="/filtre" class="uk-margin-right"><i class="fa fa-sort-amount-asc fa-2x uk-padding-small"></i>Trie des article </router-link>
+            </li>
+            <li class="uk-active">
+              <router-link to="/stat" class="uk-margin-right"><i class="fa fa-pie-chart fa-2x uk-padding-small"></i>Statistique </router-link>
             </li>
         </ul>
+      </div>
+      <div class="uk-navbar-right">
+         <ul class="uk-navbar-nav">
+            <li class="uk-active">
+              <b>App de Gestion du stock </b><i class="fa fa-database fa-2x uk-padding-small uk-margin-right"></i>
+            </li>
+          </ul>
       </div>
     </nav>
     <router-view/>

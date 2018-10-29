@@ -1,5 +1,6 @@
 <template>
-    <div class="uk-padding-large uk-margin uk-position-center uk-width-1-2">
+    <div class="uk-section uk-padding uk-margin uk-section-muted">
+    <div class="uk-container">
     <div class="alert alert-danger col-12" v-if="error">{{ error }}</div>
    
     <div v-if="loading"  class="uk-position-center">
@@ -30,7 +31,7 @@
         
         <div v-if="showmenu">
         <div class="uk-form-stacked ">
-        <button class="uk-button uk-button-text uk-margin uk-padding-bottom uk-padding-top" v-on:click="hide"><i class="fa fa-times uk-margin-right"></i> Annuler</button>
+        <button class="uk-button uk-button-text uk-margin" v-on:click="hide"><i class="fa fa-times uk-margin-right"></i> Annuler</button>
         <div clZass="uk-margin">
             <label class="uk-form-label" for="form-stacked-text">Nom : </label>
             <div class="uk-form-controls">
@@ -40,7 +41,7 @@
         <div class="uk-margin">
             <label class="uk-form-label" for="form-stacked-text">Desciption : </label>
             <div class="uk-form-controls">
-                <textarea class="uk-input uk-form-width-large uk-width-1-1" id="form-stacked-text" type="text"  v-model="Desc"  placeholder="Desciption ..." required></textarea>
+                <textarea class="uk-input uk-form-width-large uk-width-1-1" id="form-stacked-text" type="text" rows="7" v-model="Desc"  placeholder="Desciption ..." required></textarea>
             </div>
         </div>
         <div class="uk-margin">
@@ -59,6 +60,7 @@
 
       </div>
       <div class="uk-alert uk-alert-primary text-center" v-if="alert">{{ alert }}</div>
+    </div>
     </div>
 </template>
 
@@ -84,6 +86,9 @@ export default {
     try{
       this.loading = true
       this.articles = await ArticleService.getOneArticle(this.id);
+      this.Name = this.articles.Name
+      this.Desc = this.articles.Desc
+      this.Qte = this.articles.Qte      
       this.loading = false
     }catch(err){
       this.error = err.message;

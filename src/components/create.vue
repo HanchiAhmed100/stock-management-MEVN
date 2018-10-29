@@ -1,5 +1,6 @@
 <template>
-    <div class="uk-padding-large uk-margin uk-position-center uk-width-1-2">
+    <div class="uk-section uk-padding uk-section-muted uk-margin uk-margin-remove-top">
+    <div class="uk-container uk-margin-large uk-padding-large">
     <div class="alert alert-danger col-12" v-if="error">{{ error }}</div>
    
     <div v-if="loading"  class="uk-position-center">
@@ -10,19 +11,19 @@
         <div class="uk-form-stacked uk-margin uk-padding ">
 
         <div class="uk-margin">
-            <label class="uk-form-label" for="form-stacked-text  ">Nom : </label>
+            <label class="uk-form-label uk-margin" for="form-stacked-text  ">Nom : </label>
             <div class="uk-form-controls">
                 <input class="uk-input uk-form-width-large uk-width-1-1" id="form-stacked-text" type="text"  v-model="Name"  placeholder="Nom de l'article ..." required>
             </div>
         </div>
         <div class="uk-margin">
-            <label class="uk-form-label" for="form-stacked-text">Desciption : </label>
+            <label class="uk-form-label uk-margin" for="form-stacked-text">Desciption : </label>
             <div class="uk-form-controls">
-                <textarea class="uk-input uk-form-width-large uk-width-1-1" id="form-stacked-text" type="text"  v-model="Desc"  placeholder="Desciption ..." required></textarea>
+                <textarea class="uk-textarea  uk-form-width-large uk-width-1-1 "  rows="7"  id="form-stacked-text" type="text"  v-model="Desc" placeholder="Desciption ..." required></textarea>
             </div>
         </div>
         <div class="uk-margin">
-          <label class="uk-form-label" for="form-stacked-text">Quantité : </label>
+          <label class="uk-form-label uk-margin uk-padding-small uk-padding-remove-left" for="form-stacked-text">Quantité : </label>
           <div class="uk-form-controls">
               <input class="uk-input uk-form-width-large uk-width-1-1" id="form-stacked-text" type="text"  v-model="Qte"  placeholder="Quantité ..." required>
           </div>
@@ -36,6 +37,7 @@
       <div class="uk-alert uk-alert-primary text-center" v-if="alert">{{ alert }}</div>
     </div>
   </div>
+    </div>
 </template>
 
 <script>
@@ -56,14 +58,18 @@ export default {
   },
   methods :{
     async createArticle() {
-      this.loading = true
-      await ArticleService.createArticle(this.Name,this.Desc,this.Qte);
-      this.articles = await ArticleService.createArticle();
-      this.Name =''
-      this.Desc =''
-      this.Qte =''
-      this.loading = false
-      this.alert = 'L\'article à été crée '
+      if(this.Name != '' && this.Desc != '' && this.Qte != ''){
+        this.loading = true
+        await ArticleService.createArticle(this.Name,this.Desc,this.Qte);
+        this.Name =''
+        this.Desc =''
+        this.Qte =''
+        this.loading = false
+        this.alert = 'L\'article à été crée. '
+      }
+      else{
+        this.alert = 'tous les champs sont obligatoire. '
+      }
     }
   }
 

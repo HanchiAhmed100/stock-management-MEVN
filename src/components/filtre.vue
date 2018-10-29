@@ -12,13 +12,13 @@
                 <div> 
                     <ul class="uk-subnav uk-subnav-pill">
                         <li> <a>Trie par date :</a>  </li>
-                        <li><a v-on:click="getArticleSortedAsc">Ascendant  </a></li>
+                        <li ><a v-on:click="getArticleSortedAsc" class="uk-button uk-button-link">Ascendant  </a></li>
                         <li><a> - </a></li>
-                        <li><a v-on:click="getArticleSortedDesc">Descendant</a></li>
+                        <li><a v-on:click="getArticleSortedDesc" class="uk-button uk-button-link">Descendant</a></li>
                         <li> | </li>
                         <li> <a>Trie par Qunatite :</a>  </li>
-                        <li><a v-on:click="sortTabByQteAsc">Ascendant  </a></li>
-                        <li><a v-on:click="sortTabByQteDesc">Descendant</a></li>
+                        <li><a v-on:click="sortTabByQteAsc" class="uk-button uk-button-link">Ascendant  </a></li>
+                        <li><a v-on:click="sortTabByQteDesc" class="uk-button uk-button-link">Descendant</a></li>
                         <li> | </li>
                         <li><a v-on:click="sortItem">Autre</a></li>
                     </ul>
@@ -30,9 +30,18 @@
                             <li>
                                 <div class="uk-card uk-card-default uk-card-body uk-margin-small">
                                     <b class="uk-text-capitalize">{{ article.Name}}</b><br>
-                                    Qunatité : {{ article.Qte }}
+                                        <span v-if="article.Qte < 10">
+                                            <p style="color : red">Qunatité : {{ article.Qte }}</p>
+                                        </span>
+                                        <span v-if="article.Qte > 10">
+                                            <p>Qunatité : {{ article.Qte }}</p>
+                                        </span>
                                     <br>
                                     {{ `${article.CreatedAt.getFullYear()}-${article.CreatedAt.getMonth()}-${article.CreatedAt.getDate()}`}}
+                                    <br>
+                                    <router-link :to="'article/'+article.id" class="uk-button uk-button-text" >
+                                        Consulter
+                                    </router-link>
                                 </div>
                             </li>
                         </div>
@@ -40,12 +49,16 @@
                 </div>
                 <div class="uk-child-width-1-2 uk-child-width-1-3@m uk-text-centre" uk-grid uk-sortable="handle: .uk-card"  v-if="show" >
                         <div v-for="article in articles " v-bind:key="article.id">
-                            <div v-if="show">
+                            <div >
                                  <div class="uk-card uk-card-default uk-card-body uk-margin-small">
                                     <b class="uk-text-capitalize">{{ article.Name}}</b><br>
                                     Qunatité : {{ article.Qte }}
+                                    <br>{{ `${article.CreatedAt.getFullYear()}-${article.CreatedAt.getMonth()}-${article.CreatedAt.getDate()}`}}
                                     <br>
-                                    {{ `${article.CreatedAt.getFullYear()}-${article.CreatedAt.getMonth()}-${article.CreatedAt.getDate()}`}}
+                                    
+                                    <router-link :to="'article/'+article.id" class="uk-button uk-button-text" >
+                                        Consulter  
+                                    </router-link>
                                 </div>     
                             </div>
                         </div>

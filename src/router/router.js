@@ -5,6 +5,7 @@ import articles from '../components/articles'
 import OneArticle from '../components/OneArticle'
 import create from '../components/create'
 import filtre from '../components/filtre'
+import stat from '../components/stat'
 
 Vue.use(Router)
 
@@ -31,6 +32,10 @@ export default new Router({
       path :'/filtre',
       name : 'filtre',
       component : filtre
+    },{
+      path :'/stat',
+      name : 'stat',
+      component : stat
     }
   ]
 })

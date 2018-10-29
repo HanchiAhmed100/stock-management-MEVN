@@ -20,10 +20,10 @@
     <table class="uk-table uk-table-hover uk-table-divider uk-width-3-4">
     <thead>
       <tr>
-        <th scope="col" class="articlelisttop">Nom de l'article</th>
-        <th scope="col">Quantite</th>
-        <th scope="col">Date d'ajout</th>
-        <th scope="col">Action</th>
+        <th scope="col" class="articlelisttop"><b>Nom de l'article</b></th>
+        <th scope="col"><b>Quantité</b></th>
+        <th scope="col"><b>Date d'ajout</b></th>
+        <th scope="col"><b>Action</b></th>
       </tr>
     </thead>
     <tbody>
@@ -33,7 +33,10 @@
             {{ article.Name}}
           </router-link>  
         </td>
-        <td>{{article.Qte}}</td>
+        <td v-if="article.Qte < 10" style="color : red">
+          {{article.Qte}}</td>
+          <td v-if="article.Qte > 10">
+          {{article.Qte}}</td>
         <td>{{ `${article.CreatedAt.getDate()}/${article.CreatedAt.getMonth()}/${article.CreatedAt.getFullYear()}`}}</td>
         <td>
           <button v-on:click="deleteArticle(article.id)" class="uk-button uk-button-default ">Supprimer  <i class="fa fa-trash uk-margin-left"></i></button>
@@ -47,6 +50,7 @@
   </table>
       <div v-if="articlessearch" class="uk-width-1-4">
       <div v-if="show">
+        <h4>Les resultat du recherche: </h4>
         <div class="uk-card uk-card-default uk-card-body uk-margin-bottom" v-for="a in articlessearch" v-bind:key="a.id">
             <h4>
               <router-link :to="'article/'+a.id" class="uk-text-capitalize" >
