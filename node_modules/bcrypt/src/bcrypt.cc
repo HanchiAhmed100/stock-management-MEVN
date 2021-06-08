@@ -35,6 +35,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <string.h>
+
 #include "node_blf.h"
 
 #ifdef _WIN32
@@ -118,7 +119,8 @@ encode_salt(char *salt, u_int8_t *csalt, char minor, u_int16_t clen, u_int8_t lo
 	salt[2] = minor;
 	salt[3] = '$';
 
-	snprintf(salt + 4, 4, "%2.2u$", logr);
+    // Max rounds are 31
+	snprintf(salt + 4, 4, "%2.2u$", logr & 0x001F);
 
 	encode_base64((u_int8_t *) salt + 7, csalt, clen);
 }
@@ -144,12 +146,12 @@ bcrypt_gensalt(char minor, u_int8_t log_rounds, u_int8_t *seed, char *gsalt)
    i.e. $2$04$iwouldntknowwhattosayetKdJ6iFtacBqJdKe6aW7ou */
 
 void
-bcrypt(const char *key, const char *salt, char *encrypted)
+bcrypt(const char *key, size_t key_len, const char *salt, char *encrypted)
 {
 	blf_ctx state;
 	u_int32_t rounds, i, k;
 	u_int16_t j;
-	u_int8_t key_len, salt_len, logr, minor;
+	u_int8_t salt_len, logr, minor;
 	u_int8_t ciphertext[4 * BCRYPT_BLOCKS+1] = "OrpheanBeholderScryDoubt";
 	u_int8_t csalt[BCRYPT_MAXSALT];
 	u_int32_t cdata[BCRYPT_BLOCKS];
@@ -212,14 +214,11 @@ bcrypt(const char *key, const char *salt, char *encrypted)
 	decode_base64(csalt, BCRYPT_MAXSALT, (u_int8_t *) salt);
 	salt_len = BCRYPT_MAXSALT;
 	if (minor <= 'a')
-		key_len = (u_int8_t)(strlen(key) + (minor >= 'a' ? 1 : 0));
+		key_len = (u_int8_t)(key_len + (minor >= 'a' ? 1 : 0));
 	else
 	{
-		/* strlen() returns a size_t, but the function calls
-		* below result in implicit casts to a narrower integer
-		* type, so cap key_len at the actual maximum supported
+		/* cap key_len at the actual maximum supported
 		* length here to avoid integer wraparound */
-		key_len = strlen(key);
 		if (key_len > 72)
 			key_len = 72;
 		key_len++; /* include the NUL */
@@ -261,7 +260,7 @@ bcrypt(const char *key, const char *salt, char *encrypted)
 		encrypted[i++] = minor;
 	encrypted[i++] = '$';
 
-	snprintf(encrypted + i, 4, "%2.2u$", logr);
+	snprintf(encrypted + i, 4, "%2.2u$", logr & 0x001F);
 
 	encode_base64((u_int8_t *) encrypted + i + 3, csalt, BCRYPT_MAXSALT);
 	encode_base64((u_int8_t *) encrypted + strlen(encrypted), ciphertext,

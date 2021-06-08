@@ -10,14 +10,21 @@ let app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use(express.static(__dirname+"/public/"))
+//app.use(express.static("public"))
 
 //Router initalisation
 let Articles = require('./routes/api/Articles')
+let UserRouter = require('./routes/api/UserRouter')
+let Commande = require('./routes/api/Commande')
+let Client = require('./routes/api/Client')
+let Vente = require('./routes/api/Vente')
 
 //Router
 app.use('/api/Articles', Articles );
-
+app.use('/api/Users',UserRouter);
+app.use('/api/Commande',Commande);
+app.use('/api/Client',Client);
+app.use('/api/vente',Vente);
 
 
 //Port
