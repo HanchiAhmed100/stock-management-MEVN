@@ -27,6 +27,9 @@ app.use('/api/Client',Client);
 app.use('/api/vente',Vente);
 
 
+app.get("/",(req,res)=>{
+    res.send({"app" : "Gestion de stock"})
+})
 //Port
 let port = process.env.PORT || 5000
 app.listen(port, () => console.log('server started'+ port ) );
